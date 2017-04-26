@@ -69,7 +69,7 @@ def get_wind_speed():
     ms = mph * 0.447
     print("Wind speed in m/s", ms)
     wind_rotations = 0
-    return ms
+    return round(ms,  0)
 
 while True:
     wind_speed = get_wind_speed()
