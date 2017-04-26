@@ -11,7 +11,7 @@ class DAVIS7911(object):
   pin_windspeed = None
   
   def __init__(self):
-    self.timeout = utime.ticks_ms()
+    self.timeout = utime.time()
 
     try:
       self.pin_windspeed = Pin('P11', mode = Pin.IN, pull = Pin.PULL_UP)
@@ -27,11 +27,12 @@ class DAVIS7911(object):
 
   def get_windspeed(self):
     # Timeout in millis, probably has to be in seconds
-    delta_time = (utime.ticks_ms() - self.timeout)/1000
+    delta_time = (utime.time() - self.timeout)
     if(delta_time == 0):
       delta_time = 10
+    print (delta_time)
 
     mph = self.rotations * (2.25 / delta_time)
     self.rotations = 0
-    self.timeout = utime.ticks_ms()
+    self.timeout = utime.time()
     return round(self.mph_to_ms(mph), 0)
