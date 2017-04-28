@@ -1,22 +1,34 @@
 import utime
-from machine import Pin
+from machine import Pin, ADC
 
 class DAVIS7911(object):
   'Davis 7911 sensor library for Pycom LoPy'
   
-  timeout = None
+  # Constants
+  ADC_MAX = 3115
+  ADC_MIN = 175
+  PIN_SPEED = 'P11'
+  PIN_DIR = 'G3'
+  
   rotations = 0
+  timeout = None
+  adc = None
 
   # Pins
-  pin_windspeed = None
+  pin_speed = None
+  pin_dir = None
   
   def __init__(self):
     self.timeout = utime.time()
 
     try:
-      self.pin_windspeed = Pin('P11', mode = Pin.IN, pull = Pin.PULL_UP)
-      self.pin_windspeed.callback(Pin.IRQ_FALLING, self.rotations_handler)
+      self.pin_speed = Pin(self.PIN_SPEED, mode = Pin.IN, pull = Pin.PULL_UP)
+      self.pin_speed.callback(Pin.IRQ_FALLING, self.rotations_handler)
+      
+      self.adc = ADC()
+      self.pin_dir = self.adc.channel(pin = self.PIN_DIR)
     except Exception as e:
+      # Should throw exception to stop execution
       pass
     
   def rotations_handler(self, arg):
@@ -24,15 +36,29 @@ class DAVIS7911(object):
 
   def mph_to_ms(self, mph):
     return mph * 0.447
+    
+  def dir_to_deg(self, dir):
+    pc = dir / (self.ADC_MAX - self.ADC_MIN)
+    return pc * 360
 
   def get_windspeed(self):
-    # Timeout in millis, probably has to be in seconds
     delta_time = (utime.time() - self.timeout)
-    if(delta_time == 0):
-      delta_time = 10
-    print (delta_time)
 
-    mph = self.rotations * (2.25 / delta_time)
+    try:
+      mph = self.rotations * (2.25 / delta_time)
+    except Exception as e:
+      mph = 0
+    
     self.rotations = 0
     self.timeout = utime.time()
+    
     return round(self.mph_to_ms(mph), 0)
+    
+  def get_dir(self):
+    try:
+      dir = self.pin_dir.value() - self.ADC_MIN
+    except Exception as e:
+      dir = 0
+      
+    return round(self.dir_to_deg(dir), 0)
+    

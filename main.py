@@ -7,11 +7,14 @@ def setup():
   global n, sensor_davis
 
   # Connect to LoRaWAN
-  n = LORA()
-  n.connect(dev_eui, app_eui, app_key)
+  #n = LORA()
+  #n.connect(dev_eui, app_eui, app_key)
 
   # Connect Davis sensor
-  sensor_davis = DAVIS7911()
+  try:
+    sensor_davis = DAVIS7911()
+  except Exception as e:
+    print('Error: ', e)
 
 def format(wind_speed):
   windspeedstr = ''
@@ -27,7 +30,8 @@ if __name__ == '__main__':
   while True:
     
     # Send payload
-    data = format(sensor_davis.get_windspeed())
-    response = n.send(data)
-    time.sleep(10)
-    
+    #data = format(sensor_davis.get_windspeed())
+    #response = n.send(data)
+    tmp = sensor_davis.get_dir()
+    print(tmp)
+    time.sleep(0.1)  
