@@ -1,4 +1,4 @@
-import time
+from time import sleep
 from machine import I2C
 
 class SI7021(object):
@@ -42,7 +42,7 @@ class SI7021(object):
     # Write command to sensor
     self.i2c.writeto(self.ADDR, bytearray([command]))
     # Wait for conversion
-    time.sleep(0.5)
+    sleep(0.5)
     
     # msb = 0
     # lsb = 1

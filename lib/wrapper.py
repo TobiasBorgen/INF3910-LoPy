@@ -1,17 +1,17 @@
-import pycom
-import time
+from pycom import heartbeat, rgbled
+from time import sleep
 
 class LED(object):
     'Wrapper class for controlling the LED'
     
     def heartbeat(state):
-        pycom.heartbeat(state)
+        heartbeat(state)
         
     def on():
-        pycom.rgbled(0x00FF00)
+        rgbled(0x00FF00)
 
     def off():
-        pycom.rgbled(0x000000)
+        rgbled(0x000000)
         
     def blink(n = 0, d = 0.5, c = 0x0000ff):
         """
@@ -21,7 +21,7 @@ class LED(object):
         c = color
         """
         for x in range(n):
-            pycom.rgbled(0x000000)
-            time.sleep(d)
-            pycom.rgbled(c)
-            time.sleep(0.1)
+            rgbled(0x000000)
+            sleep(d)
+            rgbled(c)
+            sleep(0.1)

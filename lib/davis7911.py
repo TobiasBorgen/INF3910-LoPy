@@ -1,4 +1,4 @@
-import utime
+from utime import time
 from machine import Pin, ADC
 
 class DAVIS7911(object):
@@ -19,7 +19,7 @@ class DAVIS7911(object):
   pin_dir = None
   
   def __init__(self):
-    self.timeout = utime.time()
+    self.timeout = time()
 
     try:
       self.pin_speed = Pin(self.PIN_SPEED, mode = Pin.IN, pull = Pin.PULL_UP)
@@ -39,10 +39,11 @@ class DAVIS7911(object):
     
   def dir_to_deg(self, dir):
     pc = dir / (self.ADC_MAX - self.ADC_MIN)
+    pc = 1 if pc > 1
     return pc * 360
 
   def get_windspeed(self):
-    delta_time = (utime.time() - self.timeout)
+    delta_time = (time() - self.timeout)
 
     try:
       mph = self.rotations * (2.25 / delta_time)
@@ -50,7 +51,7 @@ class DAVIS7911(object):
       mph = 0
     
     self.rotations = 0
-    self.timeout = utime.time()
+    self.timeout = time()
     
     return round(self.mph_to_ms(mph), 0)
     

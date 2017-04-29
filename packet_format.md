@@ -5,13 +5,14 @@
 ### F `Packet format`
 Possible values:
 
-* 0 - all sensors included
-* 1 - temperature excluded
-* 2 - wind speed excluded
-* 3 - wind direction excluded
+* 0 - all sensors excluded
+* 1 - only wind direction
+* 2 - only wind speed
+* 3 - temperature excluded
 * 4 - only temperature
-* 5 - only wind speed
-* 6 - only wind direction
+* 5 - wind speed excluded
+* 6 - wind direction excluded
+* 7 - all sensors included
 	
 ### T `Temperature`
 If included, always 6 bytes.
