@@ -42,7 +42,7 @@ class SI7021(object):
     # Write command to sensor
     self.i2c.writeto(self.ADDR, bytearray([command]))
     # Wait for conversion
-    sleep(0.5)
+    sleep(0.25)
     
     # msb = 0
     # lsb = 1
