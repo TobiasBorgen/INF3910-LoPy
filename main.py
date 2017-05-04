@@ -27,6 +27,8 @@ if __name__ == '__main__':
 
   # Setup network & sensors
   setup()
+  max  = 0
+  min = 1000000000
 
   while True:
     
@@ -40,7 +42,9 @@ if __name__ == '__main__':
     except Exception as e:
       print('Measure error: ', e)
 
+
     # Send packet
     response = n.send(packet.get())
     
-    sleep(15)  
+    sleep(2)  
+
