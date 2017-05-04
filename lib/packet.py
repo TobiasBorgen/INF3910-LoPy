@@ -41,13 +41,14 @@ class Packet(object):
          -04.01
          005.22
     """
-    tx = '%.2f' % t
     
     if t >= 0:
+      tx = '%.2f' % t
       self.t = self.zfill(tx, 3)
     else:
-      pos = tx * (-1)
-      self.t = '-' + self.zfill(pos, 2)
+      pos = t * (-1)
+      tx = '%.2f' % pos
+      self.t = '-' + self.zfill(tx, 2)
 
   def set_s(self, s):
     """
