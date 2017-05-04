@@ -26,6 +26,8 @@ if __name__ == '__main__':
 
   # Setup network & sensors
   setup()
+  max  = 0
+  min = 1000000000
 
   while True:
     # Measure
@@ -34,7 +36,8 @@ if __name__ == '__main__':
     # hum = sensor_temp.getRH()
     # temp = sensor_temp.readTemp()
 
+
     # Send packet
     response = n.send(packet.get())
     
-    sleep(60)  
+    sleep(2)  

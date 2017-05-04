@@ -5,8 +5,8 @@ class DAVIS7911(object):
   'Davis 7911 sensor library for Pycom LoPy'
   
   # Constants
-  ADC_MAX = 3115
-  ADC_MIN = 175
+  ADC_MAX = 4000
+  ADC_MIN = 150
   PIN_SPEED = 'P11'
   PIN_DIR = 'G3'
   
@@ -38,9 +38,29 @@ class DAVIS7911(object):
     return mph * 0.447
     
   def dir_to_deg(self, dir):
-    pc = dir / (self.ADC_MAX - self.ADC_MIN)
-    pc = 1 if pc > 1
+    #pc2 = (dir - self.ADC_MIN) / ((self.ADC_MAX - self.ADC_MIN) / 360)
+    pc = (dir - self.ADC_MIN) / (self.ADC_MAX - self.ADC_MIN)
     return pc * 360
+
+  def dir_to_dir(self, dir):
+    if dir < 333:
+      return 0
+    elif dir < 760:
+      return 45
+    elif dir < 1190:
+      return 90
+    elif dir < 1490:
+      return 135
+    elif dir < 1930:
+      return 180
+    elif dir < 2330:
+      return 225
+    elif dir < 3020:
+      return 270
+    elif dir < 3780:
+      return 315
+    else:
+      return 0
 
   def get_windspeed(self):
     delta_time = (time() - self.timeout)
@@ -57,9 +77,9 @@ class DAVIS7911(object):
     
   def get_dir(self):
     try:
-      dir = self.pin_dir.value() - self.ADC_MIN
+      dir = self.pin_dir.value()
     except Exception as e:
       dir = 0
-      
-    return round(self.dir_to_deg(dir), 0)
+    print('Value: ' + str(self.pin_dir.value()))
+    return self.dir_to_dir(dir)
     
