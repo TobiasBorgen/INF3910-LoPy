@@ -15,27 +15,27 @@ Possible values:
 * 7 - all sensors included
 	
 ### T `Temperature`
-If included, always 6 bytes.
-
-E.g. -10.22
-	
-### S `Speed`
 If included, always 5 bytes.
 
-E.g. 04.50 (m/s)
+E.g. -10.2
+	
+### S `Speed`
+If included, always 4 bytes.
+
+E.g. 04.5 (m/s)
 	
 ### D `Direction`
-If included, always 6 bytes.
+If included, always 3 bytes.
 
-E.g. 145.87 (degrees)
+E.g. 145 (degrees)
 
-### Max packet size: 18b
-E.g. 0-01.1503.05015.00
+### Max packet size: 13b
+E.g. 0-10.204.5145
 
-All sensors included, -1.15°C, 3.05 m/s, 15 degrees
+All sensors included, -1.15°C, 3.5 m/s, 145 degrees
 
-### Min packet size: 6b
+### Min packet size: 4b
 
-E.g. 505.15
+E.g. 1145
 
-Only wind speed included, 5.15 (m/s)
+Only wind direction included, 145 degrees

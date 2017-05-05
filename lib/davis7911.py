@@ -23,7 +23,7 @@ class DAVIS7911(object):
 
     try:
       self.pin_speed = Pin(self.PIN_SPEED, mode = Pin.IN, pull = Pin.PULL_UP)
-      self.pin_speed.callback(Pin.IRQ_FALLING, self.rotations_handler)
+      self.pin_speed.callback(Pin.IRQ_RISING, self.rotations_handler)
       
       self.adc = ADC()
       self.pin_dir = self.adc.channel(pin = self.PIN_DIR)
@@ -64,7 +64,6 @@ class DAVIS7911(object):
 
   def get_windspeed(self):
     delta_time = (time() - self.timeout)
-
     try:
       mph = self.rotations * (2.25 / delta_time)
     except Exception as e:
@@ -73,13 +72,12 @@ class DAVIS7911(object):
     self.rotations = 0
     self.timeout = time()
     
-    return round(self.mph_to_ms(mph), 0)
+    return round(self.mph_to_ms(mph), 1)
     
   def get_dir(self):
     try:
       dir = self.pin_dir.value()
     except Exception as e:
       dir = 0
-    print('Value: ' + str(self.pin_dir.value()))
     return self.dir_to_dir(dir)
     

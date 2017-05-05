@@ -16,7 +16,7 @@ class Packet(object):
     try:
       pos = string.index('.')
     except Exception as e:
-      pos = 0
+      pos = len(string)
     
     missing = num - pos
     if missing > 0:
@@ -41,13 +41,14 @@ class Packet(object):
          -04.01
          005.22
     """
-    tx = '%.2f' % t
     
     if t >= 0:
+      tx = '%.1f' % t
       self.t = self.zfill(tx, 3)
     else:
-      pos = tx * (-1)
-      self.t = '-' + self.zfill(pos, 2)
+      pos = t * (-1)
+      tx = '%.1f' % pos
+      self.t = '-' + self.zfill(tx, 2)
 
   def set_s(self, s):
     """
@@ -55,7 +56,7 @@ class Packet(object):
     E.g. 04.50
          15.00
     """
-    s = '%.2f' % s
+    s = '%.1f' % s
 
     # 1. Convert s to a string with 2 decimals.
     # 2. Pad the string to match a total of 2 characters
@@ -68,7 +69,6 @@ class Packet(object):
     E.g. 145.87
          003.00
     """
-    d = '%.2f' % d
     self.d = self.zfill(d, 3)
 
   def get(self):

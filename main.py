@@ -1,7 +1,7 @@
 from config import dev_eui, app_eui, app_key
 from lora import LORA
 from time import sleep
-#from davis7911 import DAVIS7911
+from davis7911 import DAVIS7911
 from packet import Packet
 from si7021 import SI7021
 
@@ -18,8 +18,7 @@ def setup():
   # Connect Sensors
   try:
     sensor_temp = SI7021()
-    #sensor_davis = DAVIS7911()
-    pass
+    sensor_davis = DAVIS7911()
   except Exception as e:
     print('Error: ', e)
 
@@ -27,18 +26,15 @@ if __name__ == '__main__':
 
   # Setup network & sensors
   setup()
-  max  = 0
-  min = 1000000000
 
   while True:
     
     # Measure
     try:
-      packet.set_t(sensor_temp.readTemp())
-      packet.set_s(5.23)
       #packet.set_t(sensor_temp.getRH())
-      #packet.set_s(sensor_davis.get_windspeed())
-      #packet.set_d(sensor_davis.get_dir())
+      packet.set_t(sensor_temp.getTemp())
+      packet.set_s(sensor_davis.get_windspeed())
+      packet.set_d(sensor_davis.get_dir())
     except Exception as e:
       print('Measure error: ', e)
 
@@ -46,5 +42,5 @@ if __name__ == '__main__':
     # Send packet
     response = n.send(packet.get())
     
-    sleep(2)  
+    sleep(10)  
 
