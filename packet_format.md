@@ -32,10 +32,10 @@ E.g. 145 (degrees)
 ### Max packet size: 13b
 E.g. 0-10.204.5145
 
-All sensors included, -1.15°C, 3.5 m/s, 145 degrees
+All sensors included, -10.2°C, 04.5 m/s, 145°
 
 ### Min packet size: 4b
 
 E.g. 1145
 
-Only wind direction included, 145 degrees
+Only wind direction included, 145°
