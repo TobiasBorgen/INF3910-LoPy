@@ -1,9 +1,15 @@
 from config import dev_eui, app_eui, app_key
 from lora import LORA
-from time import sleep
 from davis7911 import DAVIS7911
 from packet import Packet
 from si7021 import SI7021
+from time import sleep
+from machine import deepsleep
+from network import WLAN
+
+# Disable WLAN
+wlan = WLAN()
+wlan.deinit()
 
 def setup():
   global n, sensor_davis, sensor_temp, packet
@@ -42,5 +48,6 @@ if __name__ == '__main__':
     # Send packet
     response = n.send(packet.get())
     
-    sleep(10)  
+    sleep(10) # 10s
+    #deepsleep(10000) # 10s
 
