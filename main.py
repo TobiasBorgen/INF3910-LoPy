@@ -7,13 +7,13 @@ from time import sleep
 from machine import deepsleep
 from network import WLAN
 
-# Disable WLAN
-wlan = WLAN()
-wlan.deinit()
-
 def setup():
   global n, sensor_davis, sensor_temp, packet
-
+  
+  # Disable WLAN
+  wlan = WLAN()
+  wlan.deinit()
+  
   # Init packet object
   packet = Packet()
 
