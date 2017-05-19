@@ -5,14 +5,9 @@ from packet import Packet
 from si7021 import SI7021
 from time import sleep
 from machine import deepsleep
-from network import WLAN
 
 def setup():
   global n, sensor_davis, sensor_temp, packet
-  
-  # Disable WLAN
-  wlan = WLAN()
-  wlan.deinit()
   
   # Init packet object
   packet = Packet()
