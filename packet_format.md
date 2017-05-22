@@ -1,6 +1,6 @@
 # Packet format
 
-### FTTTTTTSSSSSDDDDDD
+### FTTTTTSSSSDDD
 
 ### F `Packet format`
 Possible values:
